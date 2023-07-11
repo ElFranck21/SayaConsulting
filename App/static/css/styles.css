@@ -1,0 +1,148 @@
+/* Estilos generales */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  .container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para la navegación */
+  nav {
+    display: flex;
+    justify-content: center;
+  }
+  
+  nav ul {
+    padding-left: 0;
+  }
+  
+  nav li {
+    list-style: none;
+    display: inline-block;
+    width: 150px;
+    height: 30px;
+  }
+  
+  nav li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    font-weight: 700;
+    padding-top: 10px;
+  }
+  
+  nav li a:hover {
+    border-bottom: 3px solid black;
+  }
+  
+  /* Estilos para botones */
+  .btn {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    border: none;
+    background-color: rgb(62, 234, 117);
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  /* Estilos para tablas */
+  #categories {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #categories td, #categories th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #categories tr:nth-child(even){
+    background-color: #f2f2f2;
+  }
+  
+  #categories tr:hover {
+    background-color: #ddd;
+  }
+  
+  #categories th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+  
+  /* Estilos para formulario */
+  .form-container {
+    width: 50%;
+    margin: 0 auto;
+    background-color: antiquewhite;
+    box-shadow: 10px 10px 10px 10px 10px 10px #444444;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .form-container input {
+    width: 400px;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para íconos */
+  .fa-trash {
+    font-size: 25px;
+    color: red;
+  }
+  
+  .fa-refresh {
+    color: green;
+  }
+      

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="menu">
+                <li><a href="{{ url_for('sesion_admin') }}">Imagen</a></li>
+                <li><a href="{{ url_for('usuario') }}">Usuario</a></li>
+                <li><a href="{{ url_for('proveedor') }}">Proveedor</a></li>
+                <li><a href="{{ url_for('maquilador') }}">Maquilador</a></li>
+                <li><a href="{{ url_for('maquileros') }}">Maquileros</a></li>
+                <li><a href="{{ url_for('puestos') }}">Puestos</a></li>
+                <li><a href="{{ url_for('tela') }}">Tipo de tela</a></li>
+                <li><a href="{{ url_for('producto') }}">Producto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="container">
+        {% block content %}
+            
+        {% endblock %}
+    </section>
+</body>
+</html>
