@@ -49,7 +49,7 @@
     <h1>¡Ups! Página no encontrada</h1>
     <p>Parece que te has perdido en el ciberespacio.</p>
     <div class="image-container">
-        <img src="/App/images/error.jpeg" alt="Ilustración 404">
+        <img src="{{ url_for('static', filename='images/error/404.jpeg') }}" alt="Logo de la empresa"width="80px">
     </div>
     <p>No te preocupes, puedes volver a la <a href="/">página de inicio</a> para encontrar el camino de regreso.</p>
 </body>

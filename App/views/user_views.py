@@ -1,58 +1,36 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, abort
-
-from models.users import User
-
+from flask import Blueprint, render_template, redirect, url_for
+from models.users import User, Position, Role
+from models.db import get_connection
 from forms.user_forms import RegisterForm, LoginForm, ProfileForm
-
 from utils.file_handler import save_image
 
 user_views = Blueprint('user', __name__)
 
-@user_views.route('/users/register/', methods=('GET', 'POST'))
+@user_views.route('/user/register/', methods=('GET', 'POST'))
 def register():
     form = RegisterForm()
+    # Cargar las opciones para el campo position
+    positions = Position.get_all()
+    form.position.choices = [(position.id_position, position.name_position) for position in positions]
+    roles = Role.get_all()
+    form.role.choices = [(role.id_role, role.name_role) for role in roles]
 
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
         email = form.email.data
+        id_position = form.position.data
+        id_role = form.role.data
 
-        user = User(username, password, email)
-        user.save()
+        conn = get_connection()
+        cursor = conn.cursor()
+        query = "INSERT INTO users (username, email, password, id_position, id_role) VALUES (%s, %s, %s, %s, %s)"
+        values = (username, email, password, id_position, id_role)
+        cursor.execute(query, values)
+        conn.commit()
+        cursor.close()
+        conn.close()
 
-        return redirect(url_for('user.login'))
-    return render_template('users/register.html', form=form)
+        return redirect(url_for('admin.usuario'))
 
-@user_views.route('/users/login/', methods=('GET', 'POST'))
-def login():
-    form = LoginForm()
-
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        user = User.get_by_password(username, password)
-        if not user:
-            flash('Verifica tus Datos')
-        else:
-            return render_template('home/inicio_sesion.html', user=user)
-    return render_template('users/login.html', form=form)
-
-@user_views.route('/users/<int:id>/profile/', methods=('GET', 'POST'))
-def profile(id):
-    form = ProfileForm()
-    user = User.__get__(id)
-    if not user:
-        abort(404)
-    if form.validate_on_submit():
-        user.name = form.name.data
-        user.ape_pat = form.ape_pat.data
-        user.ape_mat = form.ape_mat.data
-        f = form.image.data
-        if f:
-            user.image = save_image(f, 'images/profiles', user.username)
-        user.save()
-    form.name.data = user.name
-    form.ape_pat.data = user.ape_pat
-    form.ape_mat.data = user.ape_mat
-    image = user.image
-    return render_template('users/profile.html', form=form, image=image)
+    return render_template('user/register.html', form=form, positions=positions, roles=roles)
