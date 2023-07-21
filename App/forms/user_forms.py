@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SelectField, SubmitField, EmailField, SubmitField, ValidationError
+from wtforms import StringField, PasswordField, SelectField, SubmitField, EmailField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 from models.users import User, Position, Role
 from flask_wtf.file import FileField, FileRequired, FileAllowed
@@ -19,11 +19,12 @@ class RegisterForm(FlaskForm):
     role = SelectField('Rol', coerce=int, validators=[DataRequired()], choices=[])
     submit = SubmitField('Registrar')
 
+
 class LoginForm(FlaskForm):
-    email = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
+    email = EmailField('Correo Electrónico', validators=[DataRequired(), Email()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Iniciar Sesión')
-
+    
 class ProfileForm(FlaskForm):
     username = StringField('Nombre de Usuario', validators=[DataRequired(), Length(min=4, max=25)])
     email = StringField('Correo Electrónico', validators=[DataRequired(), Email()])

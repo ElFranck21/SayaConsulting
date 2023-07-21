@@ -59,6 +59,13 @@ class User:
             cursor.execute(sql, (email,))
             result = cursor.fetchone()
             return result is not None
+    @staticmethod
+    def check_password(password):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT id_user FROM users WHERE password = %s"
+            cursor.execute(sql, (password,))
+            result = cursor.fetchone()
+            return result is not None            
 class Position:
     def __init__(self, id_position='', name_position=''):
         self.id_position = id_position
@@ -89,3 +96,6 @@ class Role:
                 role = Role(id_role=row["id_role"], name_role=row["name_role"])
                 roles.append(role)
         return roles
+        def check_password(self, password):
+        # Verificar si la contraseña proporcionada coincide con la contraseña almacenada en el objeto del usuario
+            return self.password == password
