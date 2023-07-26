@@ -13,7 +13,6 @@ def usuario():
 @admin_views.route('/proveedor/')
 def proveedor():
     return render_template('admin/proveedor.html')
-
 @admin_views.route('/maquilador/')
 def maquilador():
     return render_template('admin/maquilador.html')

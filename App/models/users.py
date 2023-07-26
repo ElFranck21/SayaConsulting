@@ -1,5 +1,6 @@
 # models/users.py
 from .db import get_connection
+from werkzeug.security import generate_password_hash
 
 mydb = get_connection()
 
@@ -16,14 +17,13 @@ class User:
         self.name = name
         self.password = password
         self.username = username
-
     def save(self):
         with mydb.cursor() as cursor:
             sql = "INSERT INTO users (ape_mat, ape_pat, direction, email, id_position, id_role, image, name, password, username) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             values = (self.ape_mat, self.ape_pat, self.direction, self.email, self.id_position, self.id_role, self.image, self.name, self.password, self.username)
+            self.password = generate_password_hash(self.password)
             cursor.execute(sql, values)
-            mydb.commit()
-
+        mydb.commit() 
     @staticmethod
     def get_all():
         users = []
@@ -45,6 +45,17 @@ class User:
                             username=row["username"])
                 users.append(user)
         return users
+    @staticmethod
+    def get_by_password(email, password):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT * FROM users WHERE email = %s"
+            cursor.execute(sql, (email,))
+            user_data = cursor.fetchone()
+
+            if user_data and check_password_hash(user_data["password"], password):
+                return User(**user_data)
+            else:
+                return None
     @staticmethod
     def check_username(username):
         with mydb.cursor(dictionary=True) as cursor:

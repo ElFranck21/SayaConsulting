@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Registro</h1>
-    <form method="post">
+    <form method="post" action="{{ url_for('user.register') }}">
         {{ form.csrf_token }}
         <div>
             {{ form.username.label }}
@@ -82,8 +82,8 @@
             {{ form.position.label }}
             <select class="form-control" name="{{ form.position.name }}">
                 <option value="">Seleccionar posición...</option>
-                {% for position_id, position_name in form.position.choices %}
-                    <option value="{{ position_id }}">{{ position_name }}</option>
+                {% for id_position, name_position in form.position.choices %}
+                    <option value="{{ id_position }}">{{ name_position }}</option>
                 {% endfor %}
             </select>
             {% if form.position.errors %}
@@ -96,8 +96,8 @@
             {{ form.role.label }}
             <select class="form-control" name="{{ form.role.name }}">
                 <option value="">Seleccionar rol...</option>
-                {% for role_id, role_name in form.role.choices %}
-                    <option value="{{ role_id }}">{{ role_name }}</option>
+                {% for id_role, name_role in form.role.choices %}
+                    <option value="{{ id_role }}">{{ name_role }}</option>
                 {% endfor %}
             </select>
             {% if form.role.errors %}

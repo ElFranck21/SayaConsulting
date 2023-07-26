@@ -1,8 +1,7 @@
+# user_views.py
 from flask import Blueprint, render_template, redirect, url_for
 from models.users import User, Position, Role
-from models.db import get_connection
-from forms.user_forms import RegisterForm, LoginForm, ProfileForm
-from utils.file_handler import save_image
+from forms.user_forms import RegisterForm
 
 user_views = Blueprint('user', __name__)
 
@@ -21,16 +20,17 @@ def register():
         email = form.email.data
         id_position = form.position.data
         id_role = form.role.data
+        name = form.name.data
+        direction = form.direction.data
+        ape_pat = form.ape_pat.data
+        ape_mat = form.ape_mat.data
 
-        conn = get_connection()
-        cursor = conn.cursor()
-        query = "INSERT INTO users (username, email, password, id_position, id_role) VALUES (%s, %s, %s, %s, %s)"
-        values = (username, email, password, id_position, id_role)
-        cursor.execute(query, values)
-        conn.commit()
-        cursor.close()
-        conn.close()
+        # Crear una instancia de User con los datos del formulario
+        user = User(ape_mat, ape_pat, direction, email, id_position, id_role, name, image, password, username)
+
+        # Guardar el usuario en la base de datos utilizando el método save()
+        user.save()
 
         return redirect(url_for('admin.usuario'))
 
-    return render_template('user/register.html', form=form, positions=positions, roles=roles)
+    return render_template('users/register.html', form=form)
