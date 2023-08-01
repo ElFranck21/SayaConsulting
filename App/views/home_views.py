@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, session
+from flask import Blueprint, render_template, redirect, url_for, flash, abort
 from models.users import User
 from forms.user_forms import LoginForm
 
@@ -9,9 +9,9 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        username = form.username.data
+        email = form.email.data
         password = form.password.data
-        user = User.get_by_password(username, password)
+        user = User.get_by_password(email, password)
         if not user:
             flash('Verifica tus Datos', 'error')
         else:

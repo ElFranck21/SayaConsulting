@@ -4,17 +4,17 @@ from .db import get_connection
 mydb = get_connection()
 
 class Supplier:
-    def __init__(self, ape_mat='', ape_pat='', direction='', id_material='', id_supplier='', name=''):
+    def __init__(self, name='',ape_mat='', ape_pat='', direction='', id_material='', id_supplier=''):
+        self.name = name
         self.ape_mat = ape_mat
         self.ape_pat = ape_pat
         self.direction = direction
         self.id_material = id_material
         self.id_supplier = id_supplier
-        self.name = name
     def save(self):
         with mydb.cursor() as cursor:
             sql = "INSERT INTO supplier (ape_mat, ape_pat, direction, id_material, name) VALUES (%s, %s, %s, %s, %s)"
-            values = (self.ape_mat, self.ape_pat, self.direction, self.id_material, self.name)
+            values = ( self.name, self.ape_mat, self.ape_pat, self.direction, self.id_material)
             cursor.execute(sql, values)
         mydb.commit()
     @staticmethod

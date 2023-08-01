@@ -16,9 +16,9 @@ def proveedor():
 @admin_views.route('/maquilador/')
 def maquilador():
     return render_template('admin/maquilador.html')
-@admin_views.route('/maquileros/')
-def maquileros():
-    return render_template('admin/maquileros.html')
+@admin_views.route('/maquilero/')
+def maquilero():
+    return render_template('admin/maquilero.html')
 @admin_views.route('/puestos/')
 def puestos():
     return render_template('admin/puestos.html')

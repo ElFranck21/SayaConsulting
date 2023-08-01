@@ -31,10 +31,10 @@ class RegisterForm(FlaskForm):
             raise ValidationError('El username ya existe')
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Ingresar')
-
+    email = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
+    email = EmailField('Correo Electrónico', validators=[DataRequired(), Email()])
+    password = PasswordField('Contraseña', validators=[DataRequired()])
+    submit = SubmitField('Iniciar Sesión')
 class ProfileForm(FlaskForm):
     username = StringField('Nombre de Usuario', validators=[DataRequired(), Length(min=4, max=25)])
     email = StringField('Correo Electrónico', validators=[DataRequired(), Email()])

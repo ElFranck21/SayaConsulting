@@ -5,22 +5,22 @@ from werkzeug.security import generate_password_hash
 mydb = get_connection()
 
 class User:
-    def __init__(self, ape_mat='', ape_pat='', direction='', email='', id_position='', id_role='', id_user='', image='', name='', password='', username=''):
+    def __init__(self, name='', ape_mat='', ape_pat='', direction='', email='', password='', username='', id_position='', id_role='', image='', id_user=''):
+        self.name = name
         self.ape_mat = ape_mat
         self.ape_pat = ape_pat
         self.direction = direction
         self.email = email
-        self.id_position = id_position
-        self.id_role = id_role
-        self.id_user = id_user
-        self.image = image
-        self.name = name
         self.password = password
         self.username = username
+        self.id_position = id_position
+        self.id_role = id_role
+        self.image = image
+        self.id_user = id_user
     def save(self):
         with mydb.cursor() as cursor:
-            sql = "INSERT INTO users (ape_mat, ape_pat, direction, email, id_position, id_role, image, name, password, username) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            values = (self.ape_mat, self.ape_pat, self.direction, self.email, self.id_position, self.id_role, self.image, self.name, self.password, self.username)
+            sql = "INSERT INTO users (ape_mat, ape_pat, direction, email, id_position, id_role, image, password, username, name) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            values = (self.name, self.ape_mat, self.ape_pat, self.direction, self.email, self.password, self.username, self.id_position, self.id_role, self.image)
             self.password = generate_password_hash(self.password)
             cursor.execute(sql, values)
         mydb.commit() 
