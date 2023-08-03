@@ -1,10 +1,11 @@
+<!--register.html-->
 {% extends 'base.html' %}
 
 {% block title %}Registrar nuevo Usuario{% endblock %}
 
 {% block content %}
     <h1>Registro</h1>
-    <form method="post" action="{{ url_for('user.register') }}">
+    <form method="post" action="{{ url_for('user.register') }}" enctype="multipart/form-data">
         {{ form.csrf_token }}
         <div>
             {{ form.username.label }}
@@ -79,29 +80,38 @@
             {% endif %}
         </div>
         <div>
-            {{ form.position.label }}
-            <select class="form-control" name="{{ form.position.name }}">
-                <option value="">Seleccionar posición...</option>
-                {% for id_position, name_position in form.position.choices %}
-                    <option value="{{ id_position }}">{{ name_position }}</option>
-                {% endfor %}
-            </select>
-            {% if form.position.errors %}
-                {% for error in form.position.errors %}
+            {{ form.image.label }}
+            {{ form.image(class="form-control") }}
+            {% if form.image.errors %}
+                {% for error in form.image.errors %}
                     <p>{{ error }}</p>
                 {% endfor %}
             {% endif %}
         </div>
         <div>
-            {{ form.role.label }}
-            <select class="form-control" name="{{ form.role.name }}">
+            {{ form.id_position.label }}
+            <select class="form-control" name="{{ form.id_position.name }}">
+                <option value="">Seleccionar posición...</option>
+                {% for id_position, name_position in form.id_position.choices %}
+                    <option value="{{ id_position }}">{{ name_position }}</option>
+                {% endfor %}
+            </select>
+            {% if form.id_position.errors %}
+                {% for error in form.id_position.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            {{ form.id_role.label }}
+            <select class="form-control" name="{{ form.id_role.name }}">
                 <option value="">Seleccionar rol...</option>
-                {% for id_role, name_role in form.role.choices %}
+                {% for id_role, name_role in form.id_role.choices %}
                     <option value="{{ id_role }}">{{ name_role }}</option>
                 {% endfor %}
             </select>
-            {% if form.role.errors %}
-                {% for error in form.role.errors %}
+            {% if form.id_role.errors %}
+                {% for error in form.id_role.errors %}
                     <p>{{ error }}</p>
                 {% endfor %}
             {% endif %}

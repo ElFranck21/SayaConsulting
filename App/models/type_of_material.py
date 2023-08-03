@@ -4,10 +4,16 @@ from .db import get_connection
 mydb = get_connection()
 
 class TypeOfMaterial:
-    def __init__(self, id_material='', name_material='', price=''):
-        self.id_material = id_material
+    def __init__(self, name_material='', price='', id_material=''):
         self.name_material = name_material
         self.price = price
+        self.id_material = id_material
+    def save(self):
+        with mydb.cursor() as cursor:
+            sql = "INSERT INTO type_of_material (name_material, price) VALUES (%s, %s)"
+            values = (self.name_material, self.price)
+            cursor.execute(sql, values) 
+        mydb.commit()
 
     @staticmethod
     def get_all():

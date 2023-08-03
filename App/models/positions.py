@@ -4,10 +4,16 @@ from .db import get_connection
 mydb = get_connection()
 
 class Position:
-    def __init__(self, id_position='', machinery_in_use='', name_position=''):
-        self.id_position = id_position
-        self.machinery_in_use = machinery_in_use
+    def __init__(self,name_position='', machinery_in_use='', id_position=''):
         self.name_position = name_position
+        self.machinery_in_use = machinery_in_use
+        self.id_position = id_position
+    def save(self):
+        with mydb.cursor() as cursor:
+            sql = "INSERT INTO positions (name_position, machinery_in_use) VALUES (%s, %s)"
+            values = (self.name_position, self.machinery_in_use)
+            cursor.execute(sql, values) 
+        mydb.commit()
 
     @staticmethod
     def get_all():

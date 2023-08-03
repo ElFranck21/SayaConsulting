@@ -10,6 +10,9 @@ from views.user_views import user_views
 from views.supplier_views import supplier_views
 from views.maquilero_views import maquilero_views
 from views.maquilador_views import maquilador_views
+from views.position_views import position_views
+from views.type_of_material_views import material_views
+from views.product_views import product_views
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'My Secret Key'
@@ -24,6 +27,9 @@ app.register_blueprint(user_views)
 app.register_blueprint(supplier_views)
 app.register_blueprint(maquilero_views)
 app.register_blueprint(maquilador_views)
+app.register_blueprint(position_views)
+app.register_blueprint(material_views)
+app.register_blueprint(product_views)
 
 if __name__ == '__main__':
     app.run(debug=True)
