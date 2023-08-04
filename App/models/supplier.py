@@ -17,6 +17,26 @@ class Supplier:
             values = ( self.name, self.ape_mat, self.ape_pat, self.direction, self.id_material)
             cursor.execute(sql, values)
         mydb.commit()
+    
+    @staticmethod
+    def get_all():
+        suppliers = []  # Declara la lista vacía antes del bucle
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT * FROM vista_supplier"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for row in result:
+                supplier = Supplier(
+                    id_supplier=row["ID de Proveedor"],
+                    name=row["Nombre"],
+                    ape_pat=row["Apellido_Paterno"],
+                    ape_mat=row["Apellido materno"],
+                    direction=row["Direccion"],
+                    id_material=row["ID de Material"]
+                )
+                supplier.append(supplier)  # Agrega el objeto user a la lista
+        return suppliers
+
     @staticmethod
     def get_all():
         suppliers = []

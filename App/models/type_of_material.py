@@ -19,6 +19,22 @@ class TypeOfMaterial:
     def get_all():
         types_of_material = []
         with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT * FROM vista_material"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for row in result:
+                type_of_material = TypeOfMaterial(
+                    id_material=row["ID de Material"],
+                    name_material=row["Nombre de Material"],
+                    price=row["Precio"],
+                )
+                type_of_material.append(type_of_material)
+        return types_of_material
+
+    @staticmethod
+    def get_all():
+        types_of_material = []
+        with mydb.cursor(dictionary=True) as cursor:
             sql = "SELECT * FROM type_of_material"
             cursor.execute(sql)
             result = cursor.fetchall()

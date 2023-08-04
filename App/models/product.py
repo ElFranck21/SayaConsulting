@@ -22,6 +22,24 @@ class Product:
     def get_all():
         products = []
         with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT * FROM vista_producto"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for row in result:
+                product = Product(
+                    id_product=row["ID de Producto"],
+                    id_material=row["ID de Material"],
+                    name_product=row["Nombre de Producto"],
+                    price=row["Precio"],
+                    size=row["Talla"],
+                )
+                product.append(product)
+        return products
+
+    @staticmethod
+    def get_all():
+        products = []
+        with mydb.cursor(dictionary=True) as cursor:
             sql = "SELECT * FROM product"
             cursor.execute(sql)
             result = cursor.fetchall()
@@ -34,7 +52,7 @@ class Product:
                     size=row["size"]
                 )
                 products.append(product)
-        return products
+        return products   
 
 class Material:
     def __init__(self, id_material='', name_material=''):

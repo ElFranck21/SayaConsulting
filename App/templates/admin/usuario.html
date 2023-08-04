@@ -5,8 +5,29 @@ Usuarios
 {% endblock title %}
     
 {% block content %}
-<h1>Usuario<h1>
+<h1>Usuario</h1>
     <li class="">
         <a class="" href="{{ url_for('user.register') }}">Registrar Usuario</a>
-      </li>
+    </li>
+    <table>
+      <tr>
+          <th>ID de Usuario</th>
+          <th>Nombre de usuario</th>
+          <th>Email</th>
+          <th>Nombre</th>
+          <th>Apellido Paterno</th>
+          <th>Apellido Materno</th>
+          <th>Acciones</th>
+      </tr>
+      {% for user in users %}
+      <tr>
+          <td>{{ user.id_user }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.ape_pat }}</td>
+          <td>{{ user.ape_mat }}</td>
+      </tr>
+      {% endfor %}
+  </table>
 {% endblock %}

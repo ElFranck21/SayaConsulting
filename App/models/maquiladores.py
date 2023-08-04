@@ -19,7 +19,25 @@ class Maquilador:
 
     @staticmethod
     def get_all():
-        maquilador = []
+        maquiladores = []  # Declara la lista vacía antes del bucle
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT * FROM vista_maquiladores"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for row in result:
+                maquilador = Maquilador(
+                    id_maquilador=row["ID de Maquilador"],
+                    name=row["Nombre"],
+                    ape_pat=row["Apellido_Paterno"],
+                    ape_mat=row["Apellido Materno"],
+                    direction=row["Direccion"]
+                )
+                maquilador.append(maquilador)  # Agrega el objeto user a la lista
+        return maquiladores
+
+    @staticmethod
+    def get_all():
+        maquiladores = []
         with mydb.cursor(dictionary=True) as cursor:
             sql = "SELECT * FROM maquiladores"
             cursor.execute(sql)
@@ -30,5 +48,5 @@ class Maquilador:
                                         direction=row["direction"],
                                         id_maquilador=row["id_maquilador"],
                                         name=row["name"])
-                maquilador.append(maquilador)
-        return maquilador
+                maquiladores.append(maquilador)
+        return maquiladores

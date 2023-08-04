@@ -49,6 +49,25 @@ class User:
         return users
 
     @staticmethod
+    def get_all():
+        users = []  # Declara la lista vacía antes del bucle
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT * FROM vista_usuarios"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for row in result:
+                user = User(
+                    username=row["Nombre de usuario"],
+                    email=row["Email"],
+                    id_user=row["ID de usuario"],
+                    name=row["Nombre"],
+                    ape_pat=row["Apellido paterno"],
+                    ape_mat=row["Apellido materno"]
+                )
+                users.append(user)  # Agrega el objeto user a la lista
+        return users
+        
+    @staticmethod
     def check_username(username):
         with mydb.cursor(dictionary=True) as cursor:
             sql = "SELECT id_user FROM users WHERE username = %s"
@@ -66,7 +85,17 @@ class User:
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+    @staticmethod
+    def get_by_password(email, password):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT * FROM users WHERE email = %s"
+            cursor.execute(sql, (email,))
+            user_data = cursor.fetchone()
 
+            if user_data and check_password_hash(user_data["password"], password):
+                return User(**user_data)
+            else:
+                return None
 
 class Position:
     def __init__(self, id_position='', name_position=''):
@@ -102,15 +131,3 @@ class Role:
                 role = Role(id_role=row["id_role"], name_role=row["name_role"])
                 roles.append(role)
         return roles
-
-    @staticmethod
-    def get_by_password(email, password):
-        with mydb.cursor(dictionary=True) as cursor:
-            sql = "SELECT * FROM users WHERE email = %s"
-            cursor.execute(sql, (email,))
-            user_data = cursor.fetchone()
-
-            if user_data and check_password_hash(user_data["password"], password):
-                return User(**user_data)
-            else:
-                return None

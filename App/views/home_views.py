@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, abort
+from flask import Blueprint, render_template, redirect, url_for, flash, abort, session
 from models.users import User
 from forms.user_forms import LoginForm
 
@@ -9,14 +9,18 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        email = form.email.data
+        username = form.username.data
         password = form.password.data
-        user = User.get_by_password(email, password)
-        if not user:
-            flash('Verifica tus Datos', 'error')
+        users = User.get_by_password(username, password)
+        if not users:
+            flash('Verifica tus Datos')
         else:
-            # Almacenar el ID del usuario en la sesión para mantener la sesión iniciada
-            session['id_user'] = user.id_user
-            return redirect(url_for('admin.sesion_admin'))
+            session['user'] 
+            #if users.id_role == 1:
 
-    return render_template('home/inicio_sesion.html', form=form)
+            return render_template('home/inicio_sesion.html', user=user)
+    return render_template('admin/sesion_admin.html', form=form)
+
+#@home_views.route ('/logout/')
+#def logout():
+    
