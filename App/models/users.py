@@ -19,13 +19,50 @@ class User:
         self.id_user = id_user
     
     def save(self):
+        #if self.id_user is None:
+            with mydb.cursor() as cursor:
+                self.password = generate_password_hash(self.password)
+                sql = "INSERT INTO users (name, email, password, ape_mat, ape_pat, direction, username, id_position, id_role) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                values = (self.name, self.email, self.password, self.ape_mat, self.ape_pat, self.direction, self.username, self.id_position, self.id_role)
+                cursor.execute(sql, values)
+            mydb.commit() 
+
+    def update(self):
         with mydb.cursor() as cursor:
-            self.password = generate_password_hash(self.password)
-            sql = "INSERT INTO users (name, email, password, ape_mat, ape_pat, direction, username, id_position, id_role) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            values = (self.name, self.email, self.password, self.ape_mat, self.ape_pat, self.direction, self.username, self.id_position, self.id_role)
-            cursor.execute(sql, values)
-        mydb.commit() 
-    
+            sql = "UPDATE users SET name = %s, email = %s, password = %s, ape_mat = %s, ape_pat = %s, direction = %s, username = %s, id_position = %s, id_role = %s,"
+            sql += "id_user = %s, image = %s WHERE id_user = %s"
+            val = (self.name, self.email, self.password, self.ape_mat, self.ape_pat, self.direction, self.username, self.id_position, self.id_role,self.image ,self.id_user )
+            cursor.execute(sql, val)
+        mydb.commit()  
+
+    def delete(self):
+        with mydb.cursor() as cursor:
+            sql = f"DELETE FROM users WHERE id_user = { self.id_user }"
+            cursor.execute(sql)
+            mydb.commit()
+        return self.id_user
+
+    @staticmethod
+    def get(id_user):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = f"SELECT * FROM users WHERE id_user = { id_user }"
+            cursor.execute(sql)
+            user = cursor.fetchone()
+            if user:
+                user = User(ape_mat=user["ape_mat"],
+                            ape_pat=user["ape_pat"],
+                            direction=user["direction"],
+                            email=user["email"],
+                            id_position=user["id_position"],
+                            id_role=user["id_role"],
+                            id_user=user["id_user"],
+                            image=user["image"],
+                            name=user["name"],
+                            password=user["password"],
+                            username=user["username"])
+                return user
+            return None
+        
     @staticmethod
     def get_all():
         users = []
@@ -96,6 +133,12 @@ class User:
                 return User(**user_data)
             else:
                 return None
+    def delete(self):
+        with mydb.cursor() as cursor:
+            sql = f"DELETE FROM users WHERE id_user = { self.id_user }"
+            cursor.execute(sql)
+            mydb.commit()
+            return self.id_user
 
 class Position:
     def __init__(self, id_position='', name_position=''):
