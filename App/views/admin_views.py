@@ -17,7 +17,6 @@ def sesion_admin():
 def usuario():
     users = User.get_all()
     return render_template('admin/usuario.html', users=users)
-
 @admin_views.route('/proveedor/')
 def proveedor():
     supplier = Supplier.get_all()
@@ -42,3 +41,6 @@ def tela():
 def producto():
     product = Product.get_all()
     return render_template('admin/producto.html', product=product)
+@admin_views.route('/inicio/')
+def inicio():
+    return render_template('admin/inicio.html')

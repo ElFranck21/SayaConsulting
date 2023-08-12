@@ -5,13 +5,15 @@ Usuarios
 {% endblock title %}
     
 {% block content %}
-<h1>Usuario</h1>
-    <li class="">
-        <a class="" href="{{ url_for('user.register') }}">Registrar Usuario</a>
-    </li>
-    <table>
-      <tr>
-          <th>ID de Usuario</th>
+    
+
+    <div class="table-wrapper">
+       
+            <a class="" href="{{ url_for('user.register') }}">Registrar Usuario</a>
+        
+        <table class="fl-table">
+      <tr border="1">
+          <th >ID de Usuario</th>
           <th>Nombre de usuario</th>
           <th>Email</th>
           <th>Nombre</th>
@@ -20,7 +22,7 @@ Usuarios
           <th>Acciones</th>
       </tr>
       {% for user in users %}
-      <tr>
+      <tr >
           <td>{{ user.id_user }}</td>
           <td>{{ user.username }}</td>
           <td>{{ user.email }}</td>
@@ -40,4 +42,5 @@ Usuarios
       </tr>
       {% endfor %}
   </table>
+</div>
 {% endblock %}
